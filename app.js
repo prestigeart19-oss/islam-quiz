@@ -323,9 +323,22 @@ function resetProgress() {
     }
 }
 
+// Initialiser 
 // Initialiser l'application
 window.addEventListener('DOMContentLoaded', () => {
     loadGameData();
+    
+    // Charger les préférences vocales
+    if (typeof voiceAI !== 'undefined') {
+        voiceAI.loadPreferences();
+        
+        // Saluer l'utilisateur après un court délai
+        setTimeout(() => {
+            if (voiceAI.voiceEnabled) {
+                voiceAI.greetUser();
+            }
+        }, 1000);
+    }
     
     // Enregistrer le Service Worker pour PWA
     if ('serviceWorker' in navigator) {

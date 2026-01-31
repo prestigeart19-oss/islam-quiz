@@ -1,0 +1,26 @@
+{
+  "name": "ISLAM QUIZ",
+  "short_name": "IslamQuiz",
+  "description": "Testez vos connaissances islamiques avec 200 niveaux de questions",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#4A90E2",
+  "theme_color": "#4A90E2",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "games"],
+  "lang": "fr"
+}

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#4A90E2">
+    <meta name="description" content="ISLAM QUIZ - Testez vos connaissances islamiques">
+    <title>ISLAM QUIZ</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Écran d'accueil -->
+    <div id="home-screen" class="screen active">
+        <div class="container">
+            <div class="logo">
+                <h1>🕌 ISLAM QUIZ</h1>
+                <p class="subtitle">Testez vos connaissances islamiques</p>
+            </div>
+            
+            <div class="stats-card">
+                <div class="stat">
+                    <span class="stat-label">Niveau actuel</span>
+                    <span class="stat-value" id="current-level">1</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Score total</span>
+                    <span class="stat-value" id="total-score">0</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Progression</span>
+                    <span class="stat-value" id="progress-text">0/200</span>
+                </div>
+            </div>
+
+            <button class="btn-primary" onclick="startLevel()">
+                ▶️ Commencer le niveau
+            </button>
+
+            <button class="btn-secondary" onclick="showLevelSelect()">
+                📋 Sélectionner un niveau
+            </button>
+
+            <button class="btn-secondary" onclick="showStats()">
+                📊 Statistiques
+            </button>
+        </div>
+    </div>
+
+    <!-- Écran de sélection de niveau -->
+    <div id="level-select-screen" class="screen">
+        <div class="container">
+            <h2>Sélectionner un niveau</h2>
+            <button class="btn-back" onclick="showHome()">← Retour</button>
+            
+            <div id="levels-grid" class="levels-grid">
+                <!-- Les niveaux seront générés ici -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Écran de jeu -->
+    <div id="game-screen" class="screen">
+        <div class="game-header">
+            <div class="game-info">
+                <span class="level-badge">Niveau <span id="game-level">1</span></span>
+                <span class="question-number">Question <span id="question-num">1</span>/10</span>
+            </div>
+            <div class="timer-container">
+                <div class="timer" id="timer">30</div>
+            </div>
+            <div class="score-display">
+                Score: <span id="game-score">0</span>
+            </div>
+        </div>
+
+        <div class="question-container">
+            <h3 class="question-text" id="question-text"></h3>
+            
+            <div class="answers-grid" id="answers-grid">
+                <!-- Les réponses seront générées ici -->
+            </div>
+        </div>
+
+        <div class="progress-bar-container">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+    </div>
+
+    <!-- Écran de résultat -->
+    <div id="result-screen" class="screen">
+        <div class="container">
+            <div class="result-card">
+                <div class="result-icon" id="result-icon">🎉</div>
+                <h2 id="result-title">Niveau terminé !</h2>
+                <p id="result-message"></p>
+                
+                <div class="result-stats">
+                    <div class="result-stat">
+                        <span class="result-label">Bonnes réponses</span>
+                        <span class="result-value" id="correct-answers">0/10</span>
+                    </div>
+                    <div class="result-stat">
+                        <span class="result-label">Score obtenu</span>
+                        <span class="result-value" id="level-score">0</span>
+                    </div>
+                    <div class="result-stat">
+                        <span class="result-label">Temps moyen</span>
+                        <span class="result-value" id="avg-time">0s</span>
+                    </div>
+                </div>
+
+                <div class="result-buttons">
+                    <button class="btn-primary" onclick="nextLevel()">
+                        Niveau suivant →
+                    </button>
+                    <button class="btn-secondary" onclick="retryLevel()">
+                        🔄 Refaire le niveau
+                    </button>
+                    <button class="btn-secondary" onclick="showHome()">
+                        🏠 Accueil
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Écran des statistiques -->
+    <div id="stats-screen" class="screen">
+        <div class="container">
+            <h2>📊 Statistiques</h2>
+            <button class="btn-back" onclick="showHome()">← Retour</button>
+            
+            <div class="stats-detail">
+                <div class="stat-item">
+                    <span class="stat-icon">🎯</span>
+                    <div>
+                        <p class="stat-title">Niveaux complétés</p>
+                        <p class="stat-number" id="completed-levels">0/200</p>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-icon">⭐</span>
+                    <div>
+                        <p class="stat-title">Score total</p>
+                        <p class="stat-number" id="stats-total-score">0</p>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-icon">✅</span>
+                    <div>
+                        <p class="stat-title">Questions réussies</p>
+                        <p class="stat-number" id="total-correct">0</p>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-icon">📈</span>
+                    <div>
+                        <p class="stat-title">Taux de réussite</p>
+                        <p class="stat-number" id="success-rate">0%</p>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn-danger" onclick="resetProgress()">
+                🗑️ Réinitialiser la progression
+            </button>
+        </div>
+    </div>
+
+    <!-- Sons -->
+    <audio id="correct-sound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvLZiTYIG2i78OScTgwPUKbh8LZjHAU5ktbyyHksBS13yO/dj0EKE160z" />
+    </audio>
+    <audio id="wrong-sound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvLZiTYIG2i78OScTgwPUKbh8LZjHAU5ktbyyHksBS13yO/dj0EKE160z" />
+    </audio>
+
+    <script src="questions.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
